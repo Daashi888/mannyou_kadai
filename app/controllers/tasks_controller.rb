@@ -3,9 +3,17 @@ class TasksController < ApplicationController
     @tasks = Task.all
   end
 
+  def new
+    @task = Task.new
+  end
+
   def create
     @task = Task.new(task_params)
-    redirect_to new_task_path
+    if @task.save
+      redirect_to @task, notice: "タスクを登録出来ました！"
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def show
@@ -13,6 +21,16 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @task = Task.find(params[:id])
+  end
+
+  def update
+    @task = Task.find(params[:id])
+    if @task.update(task_params)
+      redirect_to @task, notice: "物件を更新出来ました！"
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -21,6 +39,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:blog).permit(:title, :content)
+    params.require(:task).permit(:title, :content)
   end
 end
