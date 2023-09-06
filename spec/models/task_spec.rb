@@ -18,7 +18,7 @@ RSpec.describe 'タスクモデル機能', type: :model do
       it 'バリデーションが通る' do
         # ここに内容を記載する
         task = Task.new(title: '成功テスト', content: '成功テスト')
-        expect(task).not_to be_valid
+        expect(task).to be_valid
       end
     end
   end
