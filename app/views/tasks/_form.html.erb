@@ -20,6 +20,11 @@
     <%= form.label :content %>
     <%= form.text_field :content %>
   </div>
+
+  <div class="field">
+    <%= form.label :limit %>
+    <%= form.date_field :limit, include_blank:true %>
+  </div>
   <%= form.submit %>
 <% end %>
 

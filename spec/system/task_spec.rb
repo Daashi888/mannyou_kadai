@@ -50,4 +50,10 @@ RSpec.describe 'タスク管理機能', type: :system do
        end
      end
   end
+  context 'タスクが作成日時の降順に並んでいる場合' do
+    it '新しいタスクが一番上に表示される' do
+      
+      end
+    end
+  end
 end
