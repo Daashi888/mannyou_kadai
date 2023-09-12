@@ -9,6 +9,7 @@ class TasksController < ApplicationController
     end
     @tasks = @tasks.name_search(params[:search]) if params[:search].present? 
     @tasks = @tasks.status_search(params[:status]) if params[:status].present? 
+    @tasks = Task.page(params[:page]).per(10)
   end
 
   def new
