@@ -2,6 +2,8 @@ class TasksController < ApplicationController
   def index
     if params[:sort_expired]
       @tasks = Task.sort_limit
+    elsif params[:sort_priority]
+      @tasks = Task.sort_priority
     else
       @tasks = Task.all  
     end
