@@ -25,6 +25,10 @@
     <%= form.label :limit %>
     <%= form.date_field :closing, include_blank:true %>
   </div>
+
+  <div class="task_status">
+  <%= form.select :status, options_for_select_from_enum(Task, :status) %>
+  </div>
   <%= form.submit %>
 <% end %>
 

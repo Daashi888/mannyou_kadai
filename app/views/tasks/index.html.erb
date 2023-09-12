@@ -7,6 +7,8 @@
     <th>タスク名</th>
     <th>タスクの詳細</th>
     <th><%= link_to '終了期限', tasks_path(sort_expired: "true") %></th>
+    <th>ステータス</th>
+    <th>優先度</th>
   </tr>
 
   <% @tasks.each do |task| %>
@@ -14,18 +16,24 @@
       <td><%= task.title %></td>
       <td><%= task.content %></td>
       <td><%= l task.closing, format: :short %></td>
+      <td><%= task.status %></td>
+      <td><%= task.priority %></td>
       
       <td><%= link_to '詳細', task_path(task.id) %></td>
       <td><%= link_to '編集する', edit_task_path(task.id) %></td>
       <td><%= link_to '削除する', task_path(task.id), method: :delete, data: { confirm: '本当に削除していいですか？' } %></td>
     </tr>
   <% end %>
+  </table>
 
   <%= form_with(url: tasks_path, method: :get, local: true) do |form| %>
     <%= form.text_field :search %>
+    <%= form.select :status, options_for_select_from_enum(Task, :status), include_blank: true %>
     <%= form.submit 'Search' %>
   <% end %>
-  </table>
+
+  
+
   
   <br>
   
