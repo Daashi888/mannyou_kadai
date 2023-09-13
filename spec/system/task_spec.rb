@@ -52,7 +52,58 @@ RSpec.describe 'タスク管理機能', type: :system do
   end
   context 'タスクが作成日時の降順に並んでいる場合' do
     it '新しいタスクが一番上に表示される' do
-      
+      visit tasks_path
+
+      task_list = all('.task_row') 
+
+      expect(page).to have_content
+      end
+    end
+  end
+
+  describe '検索機能' do
+    before do
+      # 必要に応じて、テストデータの内容を変更して構わない
+      FactoryBot.create(:task, title: "task")
+      FactoryBot.create(:second_task, title: "sample")
+    end
+
+    context 'タイトルであいまい検索をした場合' do
+      it "検索キーワードを含むタスクで絞り込まれる" do
+        visit tasks_path
+        # タスクの検索欄に検索ワードを入力する (例: task)
+        # 検索ボタンを押す
+        fill_in 'task'
+        click_on '検索'
+        expect(page).to have_content 'task'
+      end
+    end
+    context 'ステータス検索をした場合' do
+      it "ステータスに完全一致するタスクが絞り込まれる" do
+        # ここに実装する
+        # プルダウンを選択する「select」について調べてみること
+        FactoryBot.create(:task, title: "task1", status: '未着手')
+        FactoryBot.create(:task, title: "task2", status: '着手中')
+        FactoryBot.create(:task, title: "task3", status: '完了')
+
+        visit tasks_path
+        select '着手中', from: 'status'
+        click_on '検索'
+
+        expect(page).to have_content 'task2'
+      end
+    end
+    context 'タイトルのあいまい検索とステータス検索をした場合' do
+      it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+        # ここに実装する
+        FactoryBot.create(:task, title: "task1", status: '未着手')
+        FactoryBot.create(:task, title: "task2", status: '着手中')
+        FactoryBot.create(:task, title: "task3", status: '完了')
+        
+        visit tasks_path
+        fill_in 'search'
+        select '完了', from: 'status'
+        expect(page).to have_content 'task3'
       end
     end
   end
