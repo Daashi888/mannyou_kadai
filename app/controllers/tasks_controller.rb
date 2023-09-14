@@ -10,6 +10,10 @@ class TasksController < ApplicationController
     @tasks = @tasks.name_search(params[:search]) if params[:search].present? 
     @tasks = @tasks.status_search(params[:status]) if params[:status].present? 
     @tasks = Task.page(params[:page]).per(10)
+
+    if params[:user_tasks]
+      @tasks = current_user.tasks
+    end
   end
 
   def new

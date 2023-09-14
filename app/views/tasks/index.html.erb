@@ -38,4 +38,5 @@
   <br>
   
   <%= link_to '新しくタスクを登録する', new_task_path, class:"btn btn-primary" %>
+  <%= link_to "自分のタスクのみ表示", tasks_path(user_tasks: "true"), class: "btn btn-danger" %>
   <%= paginate @tasks %>
