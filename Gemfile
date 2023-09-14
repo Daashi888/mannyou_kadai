@@ -34,6 +34,8 @@ gem 'net-smtp'
 gem 'net-imap'
 gem 'net-pop'
 
+gem 'kaminari'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -43,6 +45,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'launchy'
+  gem 'pry-rails'
 end
 
 group :development do
