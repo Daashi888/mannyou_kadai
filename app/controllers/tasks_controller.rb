@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  skip_before_action :logged_in, only:[:new]
+  
   def index
     if params[:sort_expired]
       @tasks = Task.sort_limit
