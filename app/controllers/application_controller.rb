@@ -4,10 +4,9 @@ class ApplicationController < ActionController::Base
   before_action :logged_in, only: [:new]
 
   def logged_in
-    redirect_to tasks_path(current_user) if current_user
+    redirect_to tasks_path if current_user
   end
   
-
   private
 
   def login_required

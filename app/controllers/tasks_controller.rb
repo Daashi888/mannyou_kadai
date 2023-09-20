@@ -2,19 +2,14 @@ class TasksController < ApplicationController
   skip_before_action :logged_in, only:[:new]
 
   def index
+    @tasks = current_user.tasks
     if params[:sort_expired]
-      @tasks = Task.sort_limit
+      @tasks = @tasks.sort_limit
     elsif params[:sort_priority]
-      @tasks = Task.sort_priority
-    else
-      @tasks = Task.all  
+      @tasks = @tasks.sort_priority
     end
     @tasks = @tasks.name_search(params[:search]) if params[:search].present? 
     @tasks = @tasks.status_search(params[:status]) if params[:status].present? 
-
-    if params[:user_tasks]
-      @tasks = current_user.tasks
-    end
     @tasks = @tasks.page(params[:page]).per(3)
   end
 

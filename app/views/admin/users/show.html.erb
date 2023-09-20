@@ -1,5 +1,9 @@
 <h1><%= @user.name %>の詳細</h1>
 
 <h3><%= @user.name%>の登録タスク</h3>
-<% @users.eager_load(:tasks).each.with_index(1) do |user, index| %>
+
+<% @user.tasks.each_with_index do |task,idx| %>
+  <p><%= idx + 1%>:<%= task.title %><p>
 <% end %>
+
+  

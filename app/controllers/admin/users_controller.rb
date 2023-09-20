@@ -1,4 +1,6 @@
 class Admin::UsersController < ApplicationController
+  skip_before_action :logged_in, only: [:new]
+
   def index
     @users = User.all
     if current_user.admin == false
@@ -14,7 +16,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
-    @user = User.new
+    @user = User.new(user_params)
     if @user.save
       redirect_to admin_users_path, notice: "ユーザーを登録出来ました！"
     else

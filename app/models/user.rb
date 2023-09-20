@@ -10,16 +10,9 @@ class User < ApplicationRecord
 
   has_many :tasks, dependent: :destroy
 
-  before_update :admin_cannot_update
   before_destroy :admin_cannot_delete
 
 private
-
-  def admin_cannot_update
-    if User.where(admin: true).count == 1 && will_save_change_to_admin? && !admin
-      throw :abort
-    end
-  end
 
   def admin_cannot_delete
     if User.where(admin: true).count == 1 && self.admin
