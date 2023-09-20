@@ -24,5 +24,8 @@
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %>
 
-  <%= f.submit "登録する" %>
+  <%= f.label :admin %>
+  <%= f.check_box :admin %>
+
+  <%= f.submit "新規登録する" %>
 <% end %>

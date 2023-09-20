@@ -11,7 +11,7 @@
   </div>
 <% end %>
 
-<%= form_with(model: @user, local: true) do |f| %>  
+<%= form_with(model: @user, url: admin_user_path,  local: true) do |f| %>  
   <%= f.label :name %>
   <%= f.text_field :name %>
 
@@ -23,6 +23,9 @@
 
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %>
+
+  <%= f.label :admin%>
+  <%= f.check_box :admin%>
 
   <%= f.submit "この内容で編集する" %>
 <% end %>
