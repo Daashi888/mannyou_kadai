@@ -15,6 +15,7 @@
     <th><%= link_to '終了期限', tasks_path(sort_expired: "true") %></th>
     <th>ステータス</th>
     <th><%= link_to '優先度', tasks_path(sort_priority: "true") %></th>
+    <th>ユーザーネーム</th>
   </tr>
 
   <% @tasks.each do |task| %>
@@ -24,6 +25,7 @@
       <td><%= l task.closing, format: :short %></td>
       <td><%= task.status %></td>
       <td><%= task.priority %></td>
+      <td><%= task.user.name %></td>
       
       <td><%= link_to '詳細', task_path(task.id), class:"btn btn-outline-primary" %></td>
       <td><%= link_to '編集する', edit_task_path(task.id), class:"btn btn-outline-success" %></td>
@@ -31,11 +33,6 @@
     </tr>
   <% end %>
   </table>
-
-  
-
-  
-  <br>
   
   <%= link_to '新しくタスクを登録する', new_task_path, class:"btn btn-primary" %>
   <%= paginate @tasks %>

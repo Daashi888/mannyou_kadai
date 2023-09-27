@@ -1,16 +1,16 @@
 class TasksController < ApplicationController
+  skip_before_action :logged_in, only:[:new]
+
   def index
+    @tasks = current_user.tasks
     if params[:sort_expired]
-      @tasks = Task.sort_limit
+      @tasks = @tasks.sort_limit
     elsif params[:sort_priority]
-      @tasks = Task.sort_priority
-    else
-      @tasks = Task.all  
+      @tasks = @tasks.sort_priority
     end
     @tasks = @tasks.name_search(params[:search]) if params[:search].present? 
-    binding.pry
     @tasks = @tasks.status_search(params[:status]) if params[:status].present? 
-    @tasks = Task.page(params[:page]).per(10)
+    @tasks = @tasks.page(params[:page]).per(3)
   end
 
   def new
@@ -19,6 +19,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     if @task.save
       redirect_to @task, notice: "タスクを登録出来ました！"
     else
@@ -28,10 +29,16 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
+    if @task.user_id != current_user.id
+      redirect_to tasks_path, notice: "他人のタスクを見ることはできません！"
+    end
   end
 
   def edit
     @task = Task.find(params[:id])
+    if current_user.id != @task.user_id
+      redirect_to tasks_path, notice: "他人のタスクは編集できません！"
+    end
   end
 
   def update
